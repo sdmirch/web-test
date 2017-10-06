@@ -1,0 +1,55 @@
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>Twitter Handle Generator!</title>
+  <meta name="description" content="Twitter Handle Generator">
+  <meta name="author" content="Sera">
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+
+  <script>
+    submit = function(){
+	  firstname = $("#firstname").val()
+	  
+	  equation = {firstname : firstname}
+	  
+	  $.post({
+	    url: "/solve",
+		contentType: "application/json",
+		data: JSON.stringify(equation),
+		success: function(result){
+		  $(".hidden").css("display","inline").html("Your new twitter handle is " + result.handle);
+		}
+	  });
+	}
+  </script>
+  <style>
+    .hidden {
+	  display: none;
+	}
+  </style>
+</head>
+
+<body>
+
+    <h1>Twitter Handle Generator</h1>
+	
+	<h3>Enter your first name!</h3>
+	<input type="text" placeholder="Enter your First Name" id="firstname">
+	<label for="firstname">First Name</label>
+	
+	<button onclick="submit();">Generate!</button>
+	
+	<p><span class="hidden"></span></p>
+    
+        
+	<p>Previously generated twitter handles:</p>
+	<table>
+	    {% for equation in equations %}
+		<tr> 
+		  <td>{{ equation.equation }}</td><td>{{ equation.handle }}</td>
+		</tr>
+		{% endfor %}
+	</table>
+</body>
+</html>
